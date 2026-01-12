@@ -1,9 +1,9 @@
 'use client';
 
+import { useState } from "react"; // IMPORTANTE: Agrega esto
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { FaTiktok, FaWhatsapp, FaInstagram } from "react-icons/fa"; // Importamos íconos
-import { Variants } from "framer-motion"; // 1. Importa el tipo Variants
+import { motion, AnimatePresence, Variants } from "framer-motion"; // Agrega AnimatePresence
+import { FaTiktok, FaWhatsapp, FaInstagram, FaTimes, FaBirthdayCake, FaBabyCarriage } from "react-icons/fa"; // Agrega FaTimes para la "X" de cerrar
 
 // 2. Asigna el tipo Variants a tus objetos
 const fadeInUp: Variants = {
@@ -28,6 +28,16 @@ const staggerContainer: Variants = {
 };
 
 export default function Home() {
+  // ESTADO PARA EL MODAL
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+
+  // LISTA DE IMÁGENES (Para no repetir código)
+  const items = [
+    { id: '1', src: '/images/1.webp', alt: 'Decoración de cumpleaños temática 1' },
+    { id: '2', src: '/images/2.webp', alt: 'Decoración de cumpleaños temática 2' },
+    { id: '3', src: '/images/3.webp', alt: 'Decoración de cumpleaños temática 3' },
+  ];
+
   return (
     <main className="min-h-screen bg-white text-gray-700 overflow-hidden">
       
@@ -87,8 +97,8 @@ export default function Home() {
           >
             <div className="relative w-[350px] h-[350px] md:w-[500px] md:h-[500px]">
               {/* IMPORTANTE: Asegúrate de que la imagen esté en public/images/logo-banner.png */}
-              <Image 
-                src="/images/logo-banner.png" 
+              <Image
+                src="/images/logo-banner.webp" 
                 alt="Sisters Events Banner Coleccionando Momentos" 
                 fill
                 className="object-contain drop-shadow-2xl"
@@ -98,8 +108,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-
-      {/* 3. SECCIÓN DE GALERÍA (Animada) */}
+      {/* 3. SECCIÓN DE GALERÍA (Interactiva) */}
       <section id="galeria" className="py-24 px-6 bg-white">
         <motion.div 
             initial="hidden"
@@ -108,12 +117,14 @@ export default function Home() {
             variants={fadeInUp}
             className="text-center mb-16"
         >
-            <h3 className="text-4xl font-bold text-gray-800 mb-4">Nuestro Trabajo Reciente</h3>
+            <h3 className="text-4xl font-bold text-gray-800 mb-4">Nuestros Trabajos Mas Recientes</h3>
             <div className="w-24 h-1 bg-pink-500 mx-auto rounded-full"></div>
-            <p className="text-gray-500 mt-6 max-w-xl mx-auto">Más de 10,000 seguidores en TikTok respaldan la calidad y el detalle de nuestros eventos.</p>
+            <p className="text-gray-500 mt-6 max-w-xl mx-auto">
+              Más de 10,000 seguidores en TikTok respaldan la calidad y el detalle de nuestros eventos.
+            </p>
         </motion.div>
         
-        {/* Grid con efecto stagger (uno tras otro) */}
+        {/* Grid de Imágenes */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-3 gap-8 container mx-auto"
           variants={staggerContainer}
@@ -121,27 +132,255 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {/* Placeholder 1 */}
-          <motion.div variants={fadeInUp} className="group relative h-80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-gray-100">
-            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center text-gray-400 font-medium">
-              [<Image src="/images/logo-banner.png" alt="Decoración cumpleaños" fill className="object-cover group-hover:scale-110 transition-transform duration-500"/>]
-            </div>
-             {/* CUANDO TENGAS LAS FOTOS, DESCOMENTA ESTO Y BORRA EL DIV DE ARRIBA:
-             <Image src="/images/tu-foto-1.webp" alt="Decoración cumpleaños" fill className="object-cover group-hover:scale-110 transition-transform duration-500"/> */}
-          </motion.div>
-           {/* Placeholder 2 */}
-           <motion.div variants={fadeInUp} className="group relative h-80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-gray-100">
-            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center text-gray-400 font-medium">
-              [<Image src="/images/logo-banner.png" alt="Decoración cumpleaños" fill className="object-cover group-hover:scale-110 transition-transform duration-500"/>]
-            </div>
-          </motion.div>
-           {/* Placeholder 3 */}
-           <motion.div variants={fadeInUp} className="group relative h-80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow bg-gray-100">
-            <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center text-gray-400 font-medium">
-              [F<Image src="/images/logo-banner.png" alt="Decoración cumpleaños" fill className="object-cover group-hover:scale-110 transition-transform duration-500"/>]
-            </div>
-          </motion.div>
+          {items.map((item) => (
+            <motion.div 
+              key={item.id}
+              variants={fadeInUp} 
+              layoutId={item.id} // Esto permite la animación suave al abrir
+              onClick={() => setSelectedId(item.id)} // Al hacer clic, guardamos el ID
+              className="group relative h-80 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow cursor-pointer bg-gray-100"
+            >
+              <Image 
+                src={item.src} 
+                alt={item.alt} 
+                fill 
+                className="object-cover group-hover:scale-110 transition-transform duration-500"
+              />
+              {/* Capa oscura al pasar el mouse con icono de 'ver más' */}
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                <span className="text-white font-medium bg-black/50 px-4 py-2 rounded-full backdrop-blur-sm">Ver foto</span>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
+
+        {/* EL MODAL (LIGHTBOX) - Esto va fuera del grid pero dentro de la section */}
+        <AnimatePresence>
+          {selectedId && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedId(null)} // Cierra al hacer clic afuera
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+            >
+              {/* Botón de cerrar */}
+              <button className="absolute top-5 right-5 text-white p-2 bg-white/10 rounded-full hover:bg-white/20 transition z-50">
+                <FaTimes size={24} />
+              </button>
+
+              {/* Imagen Grande */}
+              <motion.div
+                layoutId={selectedId} // Conecta con la imagen pequeña
+                className="relative w-full max-w-4xl max-h-[90vh] aspect-square md:aspect-video rounded-lg overflow-hidden"
+                onClick={(e) => e.stopPropagation()} // Evita cerrar si clickeas la imagen
+              >
+                 {items.map((item) => item.id === selectedId && (
+                   <Image
+                     key={item.id}
+                     src={item.src}
+                     alt={item.alt}
+                     fill
+                     className="object-contain" // object-contain para que se vea completa sin recortar
+                     priority
+                   />
+                 ))}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
+
+            {/* 3.5. SECCIÓN VIDEO: CÓMO TRABAJAMOS */}
+      <section className="py-20 bg-pink-50 overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            
+            {/* Columna Texto */}
+            <motion.div 
+              className="flex-1 space-y-6"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-1 bg-pink-500 rounded-full"></div>
+                <span className="text-pink-600 font-bold uppercase tracking-widest text-sm">Backstage</span>
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+                ¿CÓMO <span className="text-pink-600">TRABAJAMOS?</span>
+              </h2>
+              
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Cada evento es único. Nos encargamos de todo el proceso: desde el inflado de globos orgánicos hasta la instalación de paneles y luces neón.
+              </p>
+              
+              <ul className="space-y-4 mt-4">
+                {[
+                  "Diseños personalizados 100% a tu gusto.",
+                  "Puntualidad garantizada en la instalación.",
+                  "Materiales de alta gama y acabados premium."
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-gray-700 font-medium">
+                    <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs">✔</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Columna Video (Estilo TikTok Vertical) */}
+            <motion.div 
+              className="flex-1 flex justify-center relative"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              {/* Elemento decorativo detrás del video */}
+              <div className="absolute inset-0 bg-pink-200 rounded-3xl transform rotate-3 scale-105 blur-sm -z-10"></div>
+              
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-[300px] md:max-w-[350px]">
+                <video 
+                  controls 
+                  preload="metadata"
+                  className="w-full h-auto bg-black"
+                  // Si quieres que se reproduzca solo (sin audio inicial) descomenta estas lineas:
+                  // autoPlay 
+                  // muted 
+                  // loop 
+                >
+                  <source src="/videos/video.mp4" type="video/mp4" />
+                  Tu navegador no soporta videos.
+                </video>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+      {/* 2.8. SECCIÓN TIPOS DE EVENTO */}
+      <section className="py-24 px-6 bg-white">
+        <div className="container mx-auto max-w-5xl">
+          <motion.div 
+            initial="hidden" 
+            whileInView="visible" 
+            viewport={{ once: true }} 
+            variants={fadeInUp} 
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-extrabold text-gray-800 mb-4">
+              Organizamos todo tipo de <span className="text-pink-600">Evento</span>
+            </h2>
+            <p className="text-gray-500 text-lg">
+              Diseñamos cada detalle para que tu celebración sea única e irrepetible.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            
+            {/* TARJETA 1: CUMPLEAÑOS */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group bg-gradient-to-br from-pink-50 to-white p-10 rounded-3xl shadow-lg border border-pink-100 hover:shadow-2xl hover:shadow-pink-100 transition-all duration-300 text-center relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 w-32 h-32 bg-pink-100 rounded-bl-full -mr-8 -mt-8 opacity-50 group-hover:scale-110 transition-transform"></div>
+              
+              <div className="inline-flex items-center justify-center w-24 h-24 bg-pink-500 text-white rounded-full mb-6 shadow-lg shadow-pink-300 group-hover:rotate-12 transition-transform duration-300">
+                <FaBirthdayCake size={40} />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Fiestas de Cumpleaños</h3>
+              <p className="text-gray-600 leading-relaxed">
+                Desde el primer añito hasta los 50. Creamos temáticas soñadas con arcos orgánicos, paneles de fondo y mobiliario de tendencia.
+              </p>
+            </motion.div>
+
+            {/* TARJETA 2: BABY SHOWER */}
+            <motion.div 
+              whileHover={{ y: -10 }}
+              className="group bg-gradient-to-br from-blue-50 to-white p-10 rounded-3xl shadow-lg border border-blue-100 hover:shadow-2xl hover:shadow-blue-100 transition-all duration-300 text-center relative overflow-hidden"
+            >
+              {/* Decoración de fondo azulada/celeste para diferenciar */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-bl-full -mr-8 -mt-8 opacity-50 group-hover:scale-110 transition-transform"></div>
+              
+              <div className="inline-flex items-center justify-center w-24 h-24 bg-blue-400 text-white rounded-full mb-6 shadow-lg shadow-blue-300 group-hover:-rotate-12 transition-transform duration-300">
+                <FaBabyCarriage size={40} />
+              </div>
+              
+              <h3 className="text-2xl font-bold text-gray-800 mb-3">Baby Showers</h3>
+              <p className="text-gray-600 leading-relaxed">
+                La bienvenida perfecta para tu bebé. Decoraciones tiernas y elegantes en tonos pastel, revelación de sexo y mesas dulces.
+              </p>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+
+{/* 3.9. SECCIÓN TEMÁTICAS FAVORITAS (Brick Wall - 25 Íconos Reales) */}
+      <section className="py-20 bg-white overflow-hidden">
+        <div className="container mx-auto px-2 text-center">
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-12"
+          >
+            Eventos con tus temáticas favoritas ✨
+          </motion.h2>
+
+          {/* Contenedor del Muro */}
+          <div className="flex flex-col gap-4 items-center">
+            
+            {/* Filas 8 - 9 - 8 */}
+            {[8, 9, 8].map((count, rowIndex) => {
+              // Calculamos en qué número de imagen empieza esta fila
+              let rowStartIndex = 0;
+              if (rowIndex === 1) rowStartIndex = 8;  // La segunda fila empieza después de las primeras 8
+              if (rowIndex === 2) rowStartIndex = 17; // La tercera fila empieza después de 8 + 9
+
+              return (
+                <motion.div 
+                  key={rowIndex}
+                  className="flex flex-wrap justify-center gap-3 md:gap-4"
+                  initial={{ x: rowIndex % 2 === 0 ? -100 : 100, opacity: 0 }}
+                  whileInView={{ x: 0, opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 1, delay: rowIndex * 0.2 }}
+                >
+                  {Array.from({ length: count }).map((_, i) => {
+                    // Calculamos el número final de la imagen (del 1 al 25)
+                    const imageNumber = rowStartIndex + i + 1;
+                    
+                    return (
+                      <motion.div
+                        key={i}
+                        whileHover={{ scale: 1.3, zIndex: 20, rotate: Math.random() * 6 - 3 }}
+                        className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-28 md:h-28 rounded-lg overflow-hidden shadow-md cursor-pointer border-2 border-transparent hover:border-pink-400 transition-all"
+                      >
+                        {/* Usamos el nombre exacto de tus archivos */}
+                        <Image
+                          src={`/images/ico-${imageNumber}.webp`} 
+                          alt={`Detalle temática ${imageNumber}`}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                        {/* Filtro rosado más intenso al pasar el mouse */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-pink-600/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                      </motion.div>
+                    );
+                  })}
+                </motion.div>
+              );
+            })}
+
+          </div>
+        </div>
       </section>
 
       {/* 4. FOOTER PROFESIONAL */}
