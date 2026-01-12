@@ -382,7 +382,29 @@ export default function Home() {
           </div>
         </div>
       </section>
-
+      {/* 3.10. SECCIÓN CTA FINAL (Gris) */}
+      <section className="py-16 bg-gray-100 border-t border-gray-200">
+        <div className="container mx-auto px-6 text-center">
+          <motion.h3 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-2xl md:text-3xl font-bold text-gray-800 mb-8"
+          >
+            ¿Listo para celebrar a lo grande?
+          </motion.h3>
+          
+          <motion.a 
+            href="https://wa.me/51935744138" // Enlace temporal a WhatsApp
+            target="_blank"
+            whileHover={{ scale: 1.05, boxShadow: "0px 10px 20px rgba(219, 39, 119, 0.3)" }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-block bg-pink-600 text-white px-12 py-4 rounded-full font-bold text-xl shadow-lg hover:bg-pink-700 transition-all tracking-wide"
+          >
+            ¡CONTÁCTANOS!
+          </motion.a>
+        </div>
+      </section>
       {/* 4. FOOTER PROFESIONAL */}
       <footer id="contacto" className="bg-gray-900 text-gray-300 py-16 relative overflow-hidden">
         <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
