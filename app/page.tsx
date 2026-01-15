@@ -364,7 +364,7 @@ export default function Home() {
                       >
                         {/* Usamos el nombre exacto de tus archivos */}
                         <Image
-                          src={`/images/ico-${imageNumber}.webp`} 
+                          src={`/images/icos-${imageNumber}.webp`} 
                           alt={`Detalle temática ${imageNumber}`}
                           fill
                           className="object-cover"
