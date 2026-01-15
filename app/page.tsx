@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion"; // Agrega AnimatePresence
 import QRCode from "react-qr-code";
-import { FaTiktok, FaWhatsapp, FaInstagram, FaTimes, FaBirthdayCake, FaBabyCarriage } from "react-icons/fa"; // Agrega FaTimes para la "X" de cerrar
+import { FaTiktok, FaWhatsapp, FaInstagram, FaTimes, FaBirthdayCake, FaBabyCarriage, FaBars } from "react-icons/fa"; // Agrega FaTimes para la "X" de cerrar
 
 // 2. Asigna el tipo Variants a tus objetos
 const fadeInUp: Variants = {
@@ -32,7 +32,8 @@ const staggerContainer: Variants = {
 export default function Home() {
   // ESTADO PARA EL MODAL
   const [selectedId, setSelectedId] = useState<string | null>(null);
-
+// NUEVO: Estado para el menú móvil
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   // LISTA DE IMÁGENES (Para no repetir código)
   const items = [
     { id: '1', src: '/images/1.webp', alt: 'Decoración de cumpleaños temática 1' },
@@ -45,30 +46,82 @@ export default function Home() {
       
       {/* 1. NAVBAR (Más elegante con borde dorado sutil) */}
 {/* 1. NAVBAR */}
-      <nav className="flex justify-between items-center p-6 bg-white/95 backdrop-blur-sm sticky top-0 z-40 border-b border-pink-100">
-        <motion.h1 
-           initial={{ opacity: 0, x: -20 }}
-           animate={{ opacity: 1, x: 0 }}
-           className="text-2xl font-bold text-pink-600 tracking-wide cursor-pointer"
-        >
-          {/* Hacemos que el logo también lleve al inicio */}
-          <Link href="/">Sisters Events</Link>
-        </motion.h1>
-        
-        <ul className="hidden md:flex gap-8 font-medium text-sm uppercase tracking-wider text-gray-500 items-center">
-          <li><Link href="#galeria" className="hover:text-pink-500 transition-colors">Galería</Link></li>
-          <li><Link href="#contacto" className="hover:text-pink-500 transition-colors">Contacto</Link></li>
-          
-          {/* NUEVO BOTÓN: TRABAJA CON NOSOTROS */}
-          <li>
-            <Link 
-              href="/trabaja-con-nosotros" 
-              className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full hover:bg-pink-600 hover:text-white transition-all border border-pink-200"
+{/* 1. NAVBAR (Responsive con Menú Móvil) */}
+      <nav className="bg-white/95 backdrop-blur-sm sticky top-0 z-50 border-b border-pink-100">
+        <div className="flex justify-between items-center p-6">
+          {/* LOGO */}
+          <motion.h1 
+             initial={{ opacity: 0, x: -20 }}
+             animate={{ opacity: 1, x: 0 }}
+             className="text-2xl font-bold text-pink-600 tracking-wide cursor-pointer"
+          >
+            <Link href="/">Sisters Events</Link>
+          </motion.h1>
+
+          {/* MENÚ DE ESCRITORIO (Se oculta en móvil) */}
+          <ul className="hidden md:flex gap-8 font-medium text-sm uppercase tracking-wider text-gray-500 items-center">
+            <li><Link href="#galeria" className="hover:text-pink-500 transition-colors">Galería</Link></li>
+            <li><Link href="#contacto" className="hover:text-pink-500 transition-colors">Contacto</Link></li>
+            <li>
+              <Link 
+                href="/trabaja-con-nosotros" 
+                className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full hover:bg-pink-600 hover:text-white transition-all border border-pink-200"
+              >
+                Únete al Equipo
+              </Link>
+            </li>
+          </ul>
+
+          {/* BOTÓN HAMBURGUESA (Solo visible en móvil) */}
+          <button 
+            className="md:hidden text-gray-600 hover:text-pink-600 focus:outline-none"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
+          </button>
+        </div>
+
+        {/* MENÚ MÓVIL DESPLEGABLE */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="md:hidden overflow-hidden bg-white border-t border-gray-100"
             >
-              Únete al Equipo
-            </Link>
-          </li>
-        </ul>
+              <ul className="flex flex-col p-6 gap-6 font-medium text-center text-gray-600">
+                <motion.li whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="#galeria" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-lg hover:text-pink-600"
+                  >
+                    Galería
+                  </Link>
+                </motion.li>
+                <motion.li whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="#contacto" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="block text-lg hover:text-pink-600"
+                  >
+                    Contacto
+                  </Link>
+                </motion.li>
+                <motion.li whileTap={{ scale: 0.95 }}>
+                  <Link 
+                    href="/trabaja-con-nosotros" 
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="inline-block bg-pink-600 text-white px-6 py-3 rounded-full shadow-md w-full"
+                  >
+                    Únete al Equipo
+                  </Link>
+                </motion.li>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* 2. HERO SECTION (Con Banner/Logo y Animaciones) */}
