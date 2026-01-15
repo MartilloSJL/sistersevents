@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion"; // Agrega AnimatePresence
+import QRCode from "react-qr-code";
 import { FaTiktok, FaWhatsapp, FaInstagram, FaTimes, FaBirthdayCake, FaBabyCarriage } from "react-icons/fa"; // Agrega FaTimes para la "X" de cerrar
 
 // 2. Asigna el tipo Variants a tus objetos
@@ -420,13 +421,15 @@ export default function Home() {
         </div>
       </section>
       {/* 4. FOOTER PROFESIONAL */}
+{/* 4. FOOTER PROFESIONAL */}
       <footer id="contacto" className="bg-gray-900 text-gray-300 py-16 relative overflow-hidden">
-        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-12 relative z-10">
-            {/* Columna 1: Marca */}
+        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 relative z-10">
+            {/* Columna 1: Marca (Igual que antes) */}
             <div className="space-y-4">
                 <h4 className="text-3xl font-bold text-pink-500">Sisters Events</h4>
-                <p className="leading-relaxed text-sm">Coleccionando momentos inolvidables en Lima, Perú. Especialistas en decoración de eventos premium.</p>
+                <p className="leading-relaxed text-sm">Coleccionando momentos inolvidables en Lima, Perú.</p>
             </div>
+
              {/* Columna 2: Enlaces Rápidos */}
 {/* Columna 2: Enlaces Rápidos */}
              <div className="space-y-4">
@@ -442,6 +445,7 @@ export default function Home() {
                     <li><a href="https://wa.me/51935744138" target="_blank" className="hover:text-pink-400 transition">Cotizar</a></li>
                 </ul>
             </div>
+
              {/* Columna 3: Social y Contacto */}
              <div className="space-y-4">
                 <h5 className="text-lg font-bold text-white">Síguenos y Contáctanos</h5>
@@ -458,10 +462,27 @@ export default function Home() {
                 </div>
                 <p className="text-sm mt-4">Lima, Perú 🇵🇪</p>
             </div>
+
+            {/* ---> NUEVA COLUMNA 4: CÓDIGO QR <--- */}
+            <div className="flex flex-col items-start">
+                <h5 className="text-lg font-bold text-white mb-4">¡Escanea y comparte!</h5>
+                
+                {/* Contenedor Blanco (Necesario para contraste) */}
+                <div className="bg-white p-3 rounded-xl shadow-lg">
+                    <QRCode 
+                        value="https://sistersevents.vercel.app/" 
+                        size={100} // Tamaño en pixeles
+                        fgColor="#000000" // Color del código (Negro)
+                        bgColor="#ffffff" // Color de fondo (Blanco)
+                    />
+                </div>
+                <p className="text-xs text-gray-500 mt-2">Llévanos en tu celular</p>
+            </div>
+
         </div>
-        {/* Barra final de Copyright */}
+        {/* Copyright (Igual que antes) */}
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-            © {new Date().getFullYear()} Sisters Events. Todos los derechos reservados. Desarrollado con ❤️.
+            © {new Date().getFullYear()} Sisters Events. Todos los derechos reservados.
         </div>
       </footer>
 
