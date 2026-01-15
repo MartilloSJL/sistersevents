@@ -56,11 +56,26 @@ export default function Home() {
         </ul>
       </nav>
 
-      {/* 2. HERO SECTION (Con Banner/Logo y Animaciones) */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-b from-pink-50 to-white overflow-hidden">
-        {/* Elementos decorativos de fondo (Círculos borrosos) */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+      {/* 2. HERO SECTION (Con Background de Lujo y Overlay) */}
+      <section className="relative py-20 md:py-32 overflow-hidden min-h-[80vh] flex items-center">
+        
+        {/* ---> IMAGEN DE FONDO <--- */}
+        {/* Asegúrate de que el nombre del archivo coincida con el que guardaste en public/images */}
+        <Image 
+          src="/images/hero-bg.webp" 
+          alt="Decoración de lujo dorada y rosada Sisters Events" 
+          fill
+          priority // Carga prioritaria porque es la primera imagen que se ve
+          className="object-cover -z-20" // Se va al fondo de todo
+        />
+
+        {/* ---> OVERLAY (Capa para que se lea el texto) <--- */}
+        {/* Usamos un degradado blanco para que el texto izquierdo se lea perfecto y la imagen se luzca a la derecha */}
+        <div className="absolute inset-0 bg-white/90 md:bg-gradient-to-r md:from-white/95 md:via-white/70 md:to-transparent -z-10"></div>
+
+        {/* Elementos decorativos borrosos (Opcionales, ahora se ven más sutiles sobre el fondo) */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
 
         <div className="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-12 relative z-10">
           {/* Texto del Hero */}
@@ -69,12 +84,12 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            variants={fadeInUp} //error en variants
+            variants={fadeInUp}
           >
-            <h2 className="text-5xl md:text-7xl font-extrabold mb-6 text-gray-800 leading-tight">
+            <h2 className="text-5xl md:text-7xl font-extrabold mb-6 text-gray-900 leading-tight drop-shadow-sm">
               Creamos <span className="text-pink-600">Momentos</span> Inolvidables
             </h2>
-            <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0">
+            <p className="text-xl text-gray-700 mb-8 leading-relaxed max-w-lg mx-auto md:mx-0 font-medium">
               Especialistas en decoraciones exclusivas y elegantes para cumpleaños en Lima. Tu visión, nuestra pasión.
             </p>
             <motion.a 
@@ -88,7 +103,7 @@ export default function Home() {
             </motion.a>
           </motion.div>
 
-          {/* Imagen del Banner/Logo */}
+          {/* Imagen del Banner/Logo (Se mantiene igual) */}
           <motion.div 
             className="flex-1 flex justify-center"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -96,9 +111,8 @@ export default function Home() {
             transition={{ duration: 1 }}
           >
             <div className="relative w-[350px] h-[350px] md:w-[500px] md:h-[500px]">
-              {/* IMPORTANTE: Asegúrate de que la imagen esté en public/images/logo-banner.png */}
-              <Image
-                src="/images/logo-banner.webp" 
+              <Image 
+                src="/images/logo-banner.png" 
                 alt="Sisters Events Banner Coleccionando Momentos" 
                 fill
                 className="object-contain drop-shadow-2xl"
@@ -108,6 +122,7 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
       {/* 3. SECCIÓN DE GALERÍA (Interactiva) */}
       <section id="galeria" className="py-24 px-6 bg-white">
         <motion.div 
