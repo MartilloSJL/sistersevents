@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from "react"; // IMPORTANTE: Agrega esto
+import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion"; // Agrega AnimatePresence
 import { FaTiktok, FaWhatsapp, FaInstagram, FaTimes, FaBirthdayCake, FaBabyCarriage } from "react-icons/fa"; // Agrega FaTimes para la "X" de cerrar
 
@@ -42,17 +43,30 @@ export default function Home() {
     <main className="min-h-screen bg-white text-gray-700 overflow-hidden">
       
       {/* 1. NAVBAR (Más elegante con borde dorado sutil) */}
+{/* 1. NAVBAR */}
       <nav className="flex justify-between items-center p-6 bg-white/95 backdrop-blur-sm sticky top-0 z-40 border-b border-pink-100">
         <motion.h1 
            initial={{ opacity: 0, x: -20 }}
            animate={{ opacity: 1, x: 0 }}
-           className="text-2xl font-bold text-pink-600 tracking-wide"
+           className="text-2xl font-bold text-pink-600 tracking-wide cursor-pointer"
         >
-          Sisters Events
+          {/* Hacemos que el logo también lleve al inicio */}
+          <Link href="/">Sisters Events</Link>
         </motion.h1>
-        <ul className="flex gap-8 font-medium text-sm uppercase tracking-wider text-gray-500">
-          <li><a href="#galeria" className="hover:text-pink-500 transition-colors">Galería</a></li>
-          <li><a href="#contacto" className="hover:text-pink-500 transition-colors">Contacto</a></li>
+        
+        <ul className="hidden md:flex gap-8 font-medium text-sm uppercase tracking-wider text-gray-500 items-center">
+          <li><Link href="#galeria" className="hover:text-pink-500 transition-colors">Galería</Link></li>
+          <li><Link href="#contacto" className="hover:text-pink-500 transition-colors">Contacto</Link></li>
+          
+          {/* NUEVO BOTÓN: TRABAJA CON NOSOTROS */}
+          <li>
+            <Link 
+              href="/trabaja-con-nosotros" 
+              className="bg-pink-100 text-pink-600 px-4 py-2 rounded-full hover:bg-pink-600 hover:text-white transition-all border border-pink-200"
+            >
+              Únete al Equipo
+            </Link>
+          </li>
         </ul>
       </nav>
 
@@ -414,11 +428,17 @@ export default function Home() {
                 <p className="leading-relaxed text-sm">Coleccionando momentos inolvidables en Lima, Perú. Especialistas en decoración de eventos premium.</p>
             </div>
              {/* Columna 2: Enlaces Rápidos */}
+{/* Columna 2: Enlaces Rápidos */}
              <div className="space-y-4">
                 <h5 className="text-lg font-bold text-white">Enlaces Rápidos</h5>
                 <ul className="space-y-2 text-sm">
-                    <li><a href="#" className="hover:text-pink-400 transition">Inicio</a></li>
-                    <li><a href="#galeria" className="hover:text-pink-400 transition">Galería</a></li>
+                    <li><Link href="/" className="hover:text-pink-400 transition">Inicio</Link></li>
+                    <li><Link href="#galeria" className="hover:text-pink-400 transition">Galería</Link></li>
+                    <li>
+                      <Link href="/trabaja-con-nosotros" className="hover:text-pink-400 transition flex items-center gap-2">
+                         Trabaja con Nosotros <span className="text-xs bg-pink-600 text-white px-1 rounded">Nuevo</span>
+                      </Link>
+                    </li>
                     <li><a href="https://wa.me/51935744138" target="_blank" className="hover:text-pink-400 transition">Cotizar</a></li>
                 </ul>
             </div>
