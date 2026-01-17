@@ -166,7 +166,7 @@ export default function Home() {
             <div className="relative w-[350px] h-[350px] md:w-[500px] md:h-[500px]">
               {/* IMPORTANTE: Asegúrate de que la imagen esté en public/images/logo-banner.png */}
               <Image
-                src="/images/logo-banner.webp" 
+                src="/images/logo-banner2.jpg" 
                 alt="Sisters Events Banner Coleccionando Momentos" 
                 fill
                 className="object-contain drop-shadow-2xl"
