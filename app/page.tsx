@@ -37,8 +37,8 @@ export default function Home() {
   // LISTA DE IMÁGENES (Para no repetir código)
   const items = [
     { id: '1', src: '/images/1.webp', alt: 'Decoración de cumpleaños temática 1' },
-    { id: '2', src: '/images/2.webp', alt: 'Decoración de cumpleaños temática 2' },
-    { id: '3', src: '/images/3.webp', alt: 'Decoración de cumpleaños temática 3' },
+    { id: '2', src: '/images/imagen2.webp', alt: 'Decoración de cumpleaños temática 2' },
+    { id: '3', src: '/images/imagen3.webp', alt: 'Decoración de cumpleaños temática 3' },
   ];
 
   return (
