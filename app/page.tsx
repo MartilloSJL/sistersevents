@@ -278,18 +278,19 @@ export default function Home() {
               </div>
               
               <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
-                ¿CÓMO <span className="text-pink-600">TRABAJAMOS?</span>
+                NUESTRO <span className="text-pink-600">COMIENZO</span>
               </h2>
               
               <p className="text-lg text-gray-600 leading-relaxed">
-                Cada evento es único. Nos encargamos de todo el proceso: desde el inflado de globos orgánicos hasta la instalación de paneles y luces neón.
+                Todo empezó con una idea, muchas ganas y cero límites.
+Sister Events nació desde abajo, con trabajo duro, creatividad y el sueño de crear experiencias únicas. Hoy, miramos atrás con orgullo y seguimos creciendo gracias a la confianza de cada cliente que creyó en nosotras.
               </p>
               
               <ul className="space-y-4 mt-4">
                 {[
-                  "Diseños personalizados 100% a tu gusto.",
-                  "Puntualidad garantizada en la instalación.",
-                  "Materiales de alta gama y acabados premium."
+                  "Empezamos con poco, pero con una gran visión.",
+                  "Crecimos paso a paso, aprendiendo en cada evento.",
+                  "Hoy somos una marca que transforma espacios en recuerdos inolvidables."
                 ].map((item, index) => (
                   <li key={index} className="flex items-center gap-3 text-gray-700 font-medium">
                     <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs">✔</span>
@@ -321,6 +322,75 @@ export default function Home() {
                   // loop 
                 >
                   <source src="/videos/video.mp4" type="video/mp4" />
+                  Tu navegador no soporta videos.
+                </video>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
+      </section>
+                 {/* 3.6. SECCIÓN VIDEO: CÓMO TRABAJAMOS */}
+      <section className="py-20 bg-pink-50 overflow-hidden">
+        <div className="container mx-auto px-6">
+          <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+            {/* Columna Texto */}
+            <motion.div 
+              className="flex-1 space-y-6"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-1 bg-pink-500 rounded-full"></div>
+                <span className="text-pink-600 font-bold uppercase tracking-widest text-sm">Backstage</span>
+              </div>
+              
+              <h2 className="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+                ¿CÓMO <span className="text-pink-600">TRABAJAMOS?</span>
+              </h2>
+              
+              <p className="text-lg text-gray-600 leading-relaxed">
+                Cada evento es único. Nos encargamos de todo el proceso: desde el inflado de globos orgánicos hasta la instalación de paneles y luces neón.
+              </p>
+              
+              <ul className="space-y-4 mt-4">
+                {[
+                  "Diseños personalizados 100% a tu gusto.",
+                  "Puntualidad garantizada en la instalación.",
+                  "Materiales de alta gama y acabados premium."
+                ].map((item, index) => (
+                  <li key={index} className="flex items-center gap-3 text-gray-700 font-medium">
+                    <span className="flex-shrink-0 w-6 h-6 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xs">✔</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Columna Video (Estilo TikTok Vertical) */}
+            <motion.div 
+              className="flex-1 flex justify-center relative"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+            >
+              {/* Elemento decorativo detrás del video */}
+              <div className="absolute inset-0 bg-pink-200 rounded-3xl transform rotate-3 scale-105 blur-sm -z-10"></div>
+              
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white max-w-[300px] md:max-w-[350px]">
+                <video 
+                  controls 
+                  preload="metadata"
+                  className="w-full h-auto bg-black"
+                  // Si quieres que se reproduzca solo (sin audio inicial) descomenta estas lineas:
+                  // autoPlay 
+                  // muted 
+                  // loop 
+                >
+                  <source src="/videos/video2.mp4" type="video/mp4" />
                   Tu navegador no soporta videos.
                 </video>
               </div>
